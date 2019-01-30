@@ -33,5 +33,6 @@ Model :
 
     After model inpaint image, result images will save at images folder
 
-### Others
+### Note
+    Gan model is unsupervised learning 
 
