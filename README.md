@@ -1,4 +1,4 @@
-#Implementation of deep learning framework -- Gan, using Keras
+# Implementation of deep learning framework -- Gan, using Keras
 ## Overview
 ### Model
 Document : https://skymind.ai/wiki/generative-adversarial-network-gan
