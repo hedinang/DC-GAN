@@ -79,7 +79,7 @@ class GAN():
         model.add(LeakyReLU(alpha=0.2))
         model.add(Dense(256))
         model.add(LeakyReLU(alpha=0.2))
-        model.add(Dense(1, activation='sigmoid'))
+        model.add(Dense(1, activation='tanh'))
         model.summary()
 
         img = Input(shape=self.img_shape)

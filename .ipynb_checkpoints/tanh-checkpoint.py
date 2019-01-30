@@ -79,7 +79,7 @@ class GAN():
         model.add(LeakyReLU(alpha=0.2))
         model.add(Dense(256))
         model.add(LeakyReLU(alpha=0.2))
-        model.add(Dense(1, activation='sigmoid'))
+        model.add(Dense(1, activation='tanh'))
         model.summary()
 
         img = Input(shape=self.img_shape)
@@ -110,7 +110,6 @@ class GAN():
 
             # Select a random batch of images
             idx = np.random.randint(0, X_train.shape[0], batch_size)
-            print('idx',idx)
             imgs = X_train[idx]
 
             noise = np.random.normal(0, 1, (batch_size, self.latent_dim))

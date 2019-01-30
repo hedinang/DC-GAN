@@ -1,5 +1,3 @@
-
-from __future__ import print_function, division
 from keras.datasets import mnist
 from keras.layers import Input, Dense, Reshape, Flatten, Dropout
 from keras.layers import BatchNormalization, Activation, ZeroPadding2D
@@ -7,7 +5,6 @@ from keras.layers.advanced_activations import LeakyReLU
 from keras.layers.convolutional import UpSampling2D, Conv2D
 from keras.models import Sequential, Model
 from keras.optimizers import Adam
-from data import *
 
 import matplotlib.pyplot as plt
 
@@ -17,9 +14,9 @@ import numpy as np
 
 class GAN():
     def __init__(self):
-        self.img_rows = 512
-        self.img_cols = 512
-        self.channels = 3
+        self.img_rows = 28
+        self.img_cols = 28
+        self.channels = 1
         self.img_shape = (self.img_rows, self.img_cols, self.channels)
         self.latent_dim = 100
 
@@ -82,7 +79,7 @@ class GAN():
         model.add(LeakyReLU(alpha=0.2))
         model.add(Dense(256))
         model.add(LeakyReLU(alpha=0.2))
-        model.add(Dense(1, activation='sigmoid'))
+        model.add(Dense(1, activation='tanh'))
         model.summary()
 
         img = Input(shape=self.img_shape)
@@ -90,32 +87,18 @@ class GAN():
 
         return Model(img, validity)
 
-    def train(self, epochs, batch_size=128, sample_interval=50):
+    def train(self, epochs, batch_size, sample_interval):
 
         # Load the dataset
-#         (X_train, _), (_, _) = mnist.load_data()
-        
-        data_gen_args = dict(rotation_range=0.2,
-                    width_shift_range=0.05,
-                    height_shift_range=0.05,
-                    shear_range=0.05,
-                    zoom_range=0.05,
-                    horizontal_flip=True,
-                    fill_mode='nearest')
+        (X_train, _), (_, _) = mnist.load_data()
 
-        train = trainGenerator(batch_size,'data/','train','train_label',data_gen_args,save_to_dir = None)
-        i = 0
-        
-        for (img,label) in train :
-            if(i == 0):
-                X_train = img
-                break
-        print('Xtrain shape',X_train.shape)
         # Rescale -1 to 1
-#         X_train = X_train / 255. #with last layer activation function is sigmoid 
-#         X_train = np.expand_dims(X_train, axis=3)
-
+        X_train = X_train / 255. #with last layer activation function is sigmoid  
+        print('X===',X_train.shape)
+        X_train = np.expand_dims(X_train, axis=3)
+        print('X_train shape',X_train.shape)
         # Adversarial ground truths
+        print('batch size',batch_size)
         valid = np.ones((batch_size, 1))
         fake = np.zeros((batch_size, 1))
         print('X train shape[0]',X_train.shape[0])
@@ -127,6 +110,8 @@ class GAN():
 
             # Select a random batch of images
             idx = np.random.randint(0, X_train.shape[0], batch_size)
+            imgs = X_train[idx]
+
             noise = np.random.normal(0, 1, (batch_size, self.latent_dim))
 
             # Generate a batch of new images
