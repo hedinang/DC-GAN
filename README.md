@@ -1,15 +1,13 @@
 #Implementation of deep learning framework -- Gan, using Keras
 ## Overview
-### Data
-You can find it in folder ``data/``
-Download here (https://drive.google.com/open?id=1HpEk8HMoX2i0sjKKMw9Fbo3ipe_W9Yxz), then uncompress it.
 ### Model
+Document : https://skymind.ai/wiki/generative-adversarial-network-gan
+            
+Model :
 
-![img/u-net-architecture.png](img/u-net-architecture.png)
+![gan/g1.jpg](gan/g1.jpg)
+![gan/GANs.png](gan/GANs.png)
 
-This deep neural network is implemented with Keras functional API, which makes it extremely easy to experiment with different interesting architectures.
-
-Output from the network is a 512 x 512 x 3 which represents inpainting image that should be learned.
 
 ## How to use
 
@@ -17,25 +15,23 @@ Output from the network is a 512 x 512 x 3 which represents inpainting image tha
 
 This tutorial depends on the following libraries:
 
-* Tensorflow
 * Keras >= 1.0
 
 Also, this code should be compatible with Python versions 2.7-3.5.
+### Dataset 
+    Dataset is mnist in keras library
 
 ### Training
 
-    python3 main.py
+    Have 2 temporary files are sigmoid.py and tanh.py <=> 2 activation function of last layer in generator
+    commandline : python3 sigmoid.py or python3 tanh.py
+    
 
-### Predict
+### Result
 
-After get model from training. Add path of `model` and `save path` in predict.py
+After model inpaint image, result images will save at images folder
 
     python3 predict.py
     
 ### Others
 
-File | Descriptions
------|------------
-preprocess.py | blend fence to original data and split train:test set
-model.py | autoencoder model in keras
-data.py | preprocess image and make (samples, labels) pipeline, data augmentation for keras model
