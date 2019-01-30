@@ -13,12 +13,14 @@ Model :
 
 ### Dependencies
 
-This tutorial depends on the following libraries:
+    This tutorial depends on the following libraries:
 
-* Keras >= 1.0
+    * Keras >= 1.0
 
-Also, this code should be compatible with Python versions 2.7-3.5.
+    Also, this code should be compatible with Python versions 2.7-3.5.
+    
 ### Dataset 
+
     Dataset is mnist in keras library
 
 ### Training
@@ -29,9 +31,7 @@ Also, this code should be compatible with Python versions 2.7-3.5.
 
 ### Result
 
-After model inpaint image, result images will save at images folder
+    After model inpaint image, result images will save at images folder
 
-    python3 predict.py
-    
 ### Others
 
