@@ -21,7 +21,7 @@ Model :
     
 ### Dataset 
 
-    Dataset is mnist in keras library
+    Dataset is data/train
 
 ### Training
 
