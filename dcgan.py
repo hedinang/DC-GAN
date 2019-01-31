@@ -13,6 +13,8 @@ from data import *
 import matplotlib.pyplot as plt
 import matplotlib.image as im
 
+from PIL import Image
+
 import sys
 
 import numpy as np
@@ -56,14 +58,14 @@ class DCGAN():
 
         model = Sequential()
 
-        model.add(Dense(128 * 128 * 128, activation="relu", input_dim=self.latent_dim))
-        model.add(Reshape((128, 128, 128)))
+        model.add(Dense(128 * 128 * 20, activation="relu", input_dim=self.latent_dim))
+        model.add(Reshape((128, 128, 20)))
         model.add(UpSampling2D())
-        model.add(Conv2D(128, kernel_size=3, padding="same"))
+        model.add(Conv2D(20, kernel_size=3, padding="same"))
         model.add(BatchNormalization(momentum=0.8))
         model.add(Activation("relu"))
         model.add(UpSampling2D())
-        model.add(Conv2D(64, kernel_size=3, padding="same"))
+        model.add(Conv2D(10, kernel_size=3, padding="same"))
         model.add(BatchNormalization(momentum=0.8))
         model.add(Activation("relu"))
         model.add(Conv2D(self.channels, kernel_size=3, padding="same"))
@@ -125,7 +127,6 @@ class DCGAN():
             X_train = image
             break
         
-        print('Xtrain shape',X_train.shape)
         # Rescale -1 to 1
 #         X_train = X_train / 127.5 - 1.
 #         X_train = np.expand_dims(X_train, axis=3)
@@ -142,14 +143,11 @@ class DCGAN():
 
             # Select a random half of images
             idx = np.random.randint(0, X_train.shape[0], batch_size)
-            print('Xtrain second',X_train.shape)
             imgs = X_train[idx]
-            print('imgs shape', imgs.shape)
             
             # Sample noise and generate a batch of new images
             noise = np.random.normal(0, 1, (batch_size, self.latent_dim))
             gen_imgs = self.generator.predict(noise)
-            print('gen_imgs shape',gen_imgs.shape)
 
             # Train the discriminator (real classified as ones and generated as zeros)
             d_loss_real = self.discriminator.train_on_batch(imgs, valid)
@@ -172,9 +170,11 @@ class DCGAN():
 
     def save_imgs(self, epoch):
         
-        noise = np.random.normal(0, 1, (50, self.latent_dim))
+        noise = np.random.normal(0, 1, (50,self.latent_dim))
         gen_imgs = self.generator.predict(noise)
-        im.imsave("images/rs_%d.png" % epoch,gen_imgs)
+        for i in range(0,50) :
+#             im = Image.fromarray(np.array(gen_imgs[i])
+            im.imsave("images/rs_%d%d.png" % (epoch, i),(gen_imgs[i] * 255).astype(np.uint8))
         
 #     def save_imgs(self, epoch):
 #         r, c = 5, 5
@@ -197,4 +197,4 @@ class DCGAN():
 
 if __name__ == '__main__':
     dcgan = DCGAN()
-    dcgan.train(epochs=4000, batch_size=5, save_interval=1)
+    dcgan.train(epochs=4000, batch_size=32, save_interval=50)
