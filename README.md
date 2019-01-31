@@ -25,8 +25,7 @@ Model :
 
 ### Training
 
-    Have 2 temporary files are sigmoid.py and tanh.py <=> 2 activation function of last layer in generator
-    commandline : python3 sigmoid.py or python3 tanh.py
+    python3 dcgan.py
     
 
 ### Result
