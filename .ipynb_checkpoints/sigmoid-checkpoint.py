@@ -102,6 +102,7 @@ class GAN():
         valid = np.ones((batch_size, 1))
         fake = np.zeros((batch_size, 1))
         print('X train shape[0]',X_train.shape[0])
+        print('Matrix X',X_train)
         for epoch in range(epochs):
 
             # ---------------------
@@ -113,14 +114,16 @@ class GAN():
             imgs = X_train[idx]
 
             noise = np.random.normal(0, 1, (batch_size, self.latent_dim))
-
+            print('noise',noise)
             # Generate a batch of new images
             gen_imgs = self.generator.predict(noise)
-
+            print('gen_imgs',gen_imgs.shape)
             # Train the discriminator
             d_loss_real = self.discriminator.train_on_batch(imgs, valid)
             d_loss_fake = self.discriminator.train_on_batch(gen_imgs, fake)
             d_loss = 0.5 * np.add(d_loss_real, d_loss_fake)
+            print('dloss',d_loss_real)
+            print('dloss',d_loss_fake)
 
             # ---------------------
             #  Train Generator
@@ -159,4 +162,4 @@ class GAN():
 
 if __name__ == '__main__':
     gan = GAN()
-    gan.train(epochs=10000, batch_size=32, sample_interval=200)
+    gan.train(epochs=10000, batch_size=16, sample_interval=200)
