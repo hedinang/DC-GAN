@@ -111,11 +111,11 @@ class DCGAN():
         # Load the dataset
 #         (X_train, _), (_, _) = mnist.load_data()
         
-        data_gen_args = dict(rotation_range=360,
-                    width_shift_range=1.0,
-                    height_shift_range=1.0,
-                    shear_range=0.1,
-                    zoom_range=0.1,
+        data_gen_args = dict(rotation_range=0.2,
+                    width_shift_range=0.05,
+                    height_shift_range=0.05,
+                    shear_range=0.05,
+                    zoom_range=0.05,
                     horizontal_flip=True,
                     vertical_flip = True,
                     fill_mode='nearest')
