@@ -94,14 +94,11 @@ class GAN():
 
         # Rescale -1 to 1
         X_train = X_train / 127.5 - 1. #with last layer activation function is tanh 
-        print('X===',X_train.shape)
         X_train = np.expand_dims(X_train, axis=3)
-        print('X_train shape',X_train.shape)
         # Adversarial ground truths
-        print('batch size',batch_size)
         valid = np.ones((batch_size, 1))
         fake = np.zeros((batch_size, 1))
-        print('X train shape[0]',X_train.shape[0])
+        print('valid',valid.shape)
         for epoch in range(epochs):
 
             # ---------------------
@@ -115,7 +112,9 @@ class GAN():
             noise = np.random.normal(0, 1, (batch_size, self.latent_dim))
 
             # Generate a batch of new images
+            print('noise',noise.shape)
             gen_imgs = self.generator.predict(noise)
+            print('gen_imgs',gen_imgs.shape)
 
             # Train the discriminator
             d_loss_real = self.discriminator.train_on_batch(imgs, valid)

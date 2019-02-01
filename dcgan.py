@@ -134,7 +134,7 @@ class DCGAN():
         # Adversarial ground truths
         valid = np.ones((batch_size, 1))
         fake = np.zeros((batch_size, 1))
-
+        print('valid',valid.shape)
         for epoch in range(epochs):
 
             # ---------------------
@@ -147,8 +147,10 @@ class DCGAN():
             
             # Sample noise and generate a batch of new images
             noise = np.random.normal(0, 1, (batch_size, self.latent_dim))
+            print('noise',noise.shape)
             gen_imgs = self.generator.predict(noise)
-
+            print('gen_imgs',gen_imgs.shape)
+            
             # Train the discriminator (real classified as ones and generated as zeros)
             d_loss_real = self.discriminator.train_on_batch(imgs, valid)
             d_loss_fake = self.discriminator.train_on_batch(gen_imgs, fake)
@@ -173,28 +175,8 @@ class DCGAN():
         noise = np.random.normal(0, 1, (50,self.latent_dim))
         gen_imgs = self.generator.predict(noise)
         for i in range(0,50) :
-#             im = Image.fromarray(np.array(gen_imgs[i])
             im.imsave("images/rs_%d%d.png" % (epoch, i),(gen_imgs[i] * 255).astype(np.uint8))
         
-#     def save_imgs(self, epoch):
-#         r, c = 5, 5
-#         noise = np.random.normal(0, 1, (r * c, self.latent_dim))
-#         gen_imgs = self.generator.predict(noise)
-
-#         # Rescale images 0 - 1
-#         gen_imgs = 0.5 * gen_imgs + 0.5
-
-#         fig, axs = plt.subplots(r, c)
-#         cnt = 0
-#         for i in range(r):
-#             for j in range(c):
-#                 axs[i,j].imshow(gen_imgs[cnt, :,:,0], cmap='gray')
-#                 axs[i,j].axis('off')
-#                 cnt += 1
-#         fig.savefig("images/mnist_%d.png" % epoch)
-#         plt.close()
-
-
 if __name__ == '__main__':
     dcgan = DCGAN()
-    dcgan.train(epochs=4000, batch_size=32, save_interval=50)
+    dcgan.train(epochs=1000, batch_size=32, save_interval=50)
