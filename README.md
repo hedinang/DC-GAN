@@ -4,7 +4,8 @@ DCGAN is Deep Convolutional Generative Adversarial Networks
 DCGAN is unsupervised deep learning  
 ## Model 
 Document : https://skymind.ai/wiki/generative-adversarial-network-gan
-
+           https://github.com/Zackory/Keras-MNIST-GAN/blob/master/mnist_dcgan.py
+            
 Model : 
 
 ## How to use
